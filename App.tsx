@@ -1,19 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { SplashScreen } from "expo";
+
+import Routes from "./app/Routes";
+import { AnimatedAppLoader } from "./app/components"
+
+SplashScreen.preventAutoHide();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <AnimatedAppLoader image={require("./assets/splash.png")}>
+      <Routes />
+    </AnimatedAppLoader>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
