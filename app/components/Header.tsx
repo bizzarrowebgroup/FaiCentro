@@ -25,36 +25,44 @@ const styles = StyleSheet.create({
     },
     iconDebug: {
         position: "absolute",
-        top: 0,
+        top: 25,
         right: 40
     },
     iconShop: {
         position: "absolute",
-        top: 0,
+        top: 25,
         right: 0
+    },
+    imageLogo: {
+        width: "50%",
+        height: 50,
+        resizeMode: "contain"
     }
 });
 
-export type Props = {
-    onPress?: () => void;
+type Props = {
+    onPressFeedback?: () => void;
+    onPressShop?: () => void;
 };
 
 const Header: React.FC<Props> = ({
-    onPress
+    onPressFeedback,
+    onPressShop
 }) => {
     return (
         <View style={styles.headerBox}>
             <View style={styles.headerBoxText}>
                 <Text style={styles.headerText}>{"MESTRE SHOPPING DISTRICT"}</Text>
-                <Text style={styles.headerTextLogo}>{"Fai Centro!"}</Text>
+                {/* <Text style={styles.headerTextLogo}>{"Fai Centro!"}</Text> */}
+                <Image source={require("../../assets/logoFaiCentro-red.png")} style={styles.imageLogo} />
             </View>
-            <TouchableOpacity style={styles.iconDebug}>
+            <TouchableOpacity style={styles.iconDebug} onPress={onPressFeedback}>
                 <Image style={{
                     width: 30,
                     height: 30,
                 }} source={require("../../assets/icon-debug.png")} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.iconShop}>
+            <TouchableOpacity style={styles.iconShop} onPress={onPressShop}>
                 <Image style={{
                     width: 30,
                     height: 30,

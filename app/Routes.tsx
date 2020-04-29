@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 
 import IntroScreen from "./screen/IntroScreen";
 import DashScreen from "./screen/DashScreen";
+import ShopScreen from "./screen/ShopScreen";
 // import { SocialMedia, Header } from "./components/index";
 
 import {
@@ -37,27 +38,6 @@ const Drawer = createDrawerNavigator();
 //                 <Text style={{ color: "white", fontSize: 22 }}>demo - {props.route.name}_Component</Text>
 //             </ScrollView>
 //         </View>
-//     );
-// }
-
-// const ModalsRoutes: React.FC = () => {
-//     return (
-//         <ModalStack.Navigator
-//             initialRouteName="Home"
-//             screenOptions={({ route, navigation }) => ({
-//                 gestureEnabled: true,
-//                 cardOverlayEnabled: true,
-//                 headerStatusBarHeight:
-//                     navigation.dangerouslyGetState().routes.indexOf(route) > 0
-//                         ? 0
-//                         : undefined,
-//                 ...TransitionPresets.ModalPresentationIOS,
-//             })}
-//             mode="modal"
-//             headerMode="none"
-//         >
-//             <ModalStack.Screen name="HomeModal" component={IlSaloneScreen} />
-//         </ModalStack.Navigator>
 //     );
 // }
 
@@ -100,10 +80,9 @@ const Drawer = createDrawerNavigator();
 //         </Drawer.Navigator>
 //     )
 // }
-
-export default function Routes(){
-    return (<NavigationContainer>
-        <Stack.Navigator initialRouteName="Intro" headerMode={"float"} screenOptions={{
+const MainFlow: React.FC = () => {
+    return (
+        <Stack.Navigator initialRouteName="Intro" mode="card" headerMode={"screen"} screenOptions={{
             gestureEnabled: false
         }}>
             <Stack.Screen name="Intro" component={IntroScreen} options={{
@@ -112,18 +91,30 @@ export default function Routes(){
             <Stack.Screen name="DashBoard" component={DashScreen} options={{
                 headerShown: false
             }} />
-            {/* <Stack.Screen name="WelcomeIntro" component={WelcomeScreenIntro} options={{
-                headerShown: false
-            }} />
-            <Stack.Screen name="WelcomeNotification" component={WelcomeScreenNotification} options={{
-                headerShown: false
-            }} /> */}
-            {/* <Stack.Screen name="DashBoard" component={DashboardRoute} options={{
-                headerShown: false,
-            }} />
-            <Stack.Screen name="RouteModal" component={ModalsRoutes} options={{
-                headerShown: false,
-            }} /> */}
         </Stack.Navigator>
+    )
+}
+
+export default function Routes() {
+    return (<NavigationContainer>
+        <ModalStack.Navigator
+            screenOptions={{
+                ...TransitionPresets.ModalPresentationIOS,
+                header: undefined,
+                cardOverlayEnabled: true,
+                gestureEnabled: true
+            }}
+            headerMode="none"
+            mode="modal"
+            initialRouteName="Main"
+        >
+            <ModalStack.Screen
+                name="Main"
+                options={{ headerShown: false }}
+                component={MainFlow}
+            />
+            <ModalStack.Screen name="ShopDetails" component={ShopScreen} />
+        </ModalStack.Navigator>
+        
     </NavigationContainer>);
 }
