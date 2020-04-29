@@ -8,17 +8,17 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         justifyContent: "center",
-        // borderBottomWidth: 1,
-        // borderBottomColor: "darkgrey"
     },
 });
 
 type Props = {
     onPress?: () => void;
+    navigation?: any;
 };
 
 const ModalHeader: React.FC<Props> = ({
-    onPress
+    onPress,
+    navigation
 }) => {
     return (
         <View style={styles.headerModalBox}>

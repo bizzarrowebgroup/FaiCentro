@@ -14,8 +14,6 @@ export default StyleSheet.create({
     },
     shopBoxText: {
         backgroundColor: "white",
-        paddingTop: 20,
-        paddingHorizontal: 20
     },
     imageLogo: {
         width: 276,
@@ -56,12 +54,5 @@ export default StyleSheet.create({
         height: 40,
         backgroundColor: '#e8e9ef',
         borderRadius: 10,
-    },
-    slider: {
-        // marginTop: 15,
-        // overflow: 'hidden' // for custom animations
-    },
-    sliderContentContainer: {
-        // paddingVertical: 10 // for custom animation
     },
 });

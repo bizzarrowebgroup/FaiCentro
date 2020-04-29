@@ -557,7 +557,6 @@ const IntroScreen: React.FC<Props> = ({
 
   async function fetchData() {
     const res = await fetch("https://faicentro.it/esercenti/all/json");
-    // const res = await fetch("https://faicentro.it/ristoratori/all/json");
     res
       .json()
       .then(res => setNegozi(res))
@@ -572,17 +571,15 @@ const IntroScreen: React.FC<Props> = ({
     <View style={styles.dashBox}>
       <Header
         onPressFeedback={() => console.log("PressedFeedback")}
-        onPressShop={() => console.log("PressedShop")} />
+        onPressShop={() => console.log("PressedShop")}
+      />
       {negozi.length > 1 && <MapView
-        // ref={map => { this.map = map }}
-        showsMyLocationButton={true}
+        showsMyLocationButton={false}
         showsUserLocation={true}
-        showsIndoors={false}
+        showsIndoors={true}
         showsTraffic={false}
         loadingEnabled={true}
-        // radius={100}
-        provider="google"
-        // minZoomLevel={7}
+        // provider="google"
         clusterTextColor="white"
         clusterColor="#DB0106"
         initialRegion={INITIAL_REGION}
@@ -592,18 +589,11 @@ const IntroScreen: React.FC<Props> = ({
           strokeColor="rgba(0, 0, 0, 0.55)"
           fillColor="rgba(255, 26, 26, 0.2)"
           strokeWidth={2}
-          geojson={myPlace} />
-        {/* {negozi.map((item, key) => (
-          <Marker key={key} coordinate={{ latitude: item.latitude, longitude: item.longitude }}>
-            <View style={styles.marker}>
-              <Text style={styles.text}>{item.title}</Text>
-            </View>
-          </Marker>
-        ))} */}
+          geojson={myPlace}
+        />
         {negozi.map((item, key) => (
           <Place
             key={`map-marker-${item.nid}`}
-            // keyMarker={item.nid}
             coordinate={{
               latitude: parseFloat(item.latitude),
               longitude: parseFloat(item.longitude),
@@ -612,9 +602,10 @@ const IntroScreen: React.FC<Props> = ({
             image={item.field_main_image}
             description={item.field_address}
             onPress={() => navigation.navigate('ShopDetails', { shopID: item.nid })}
-          />
-        ))}
-      </MapView>}
+          />))
+        }
+      </MapView>
+      }
     </View>
   )
 }

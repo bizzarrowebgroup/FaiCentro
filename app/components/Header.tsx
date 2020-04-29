@@ -4,13 +4,20 @@ import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
     headerBox: {
-        height: 77, //Constants.statusBarHeight * 4,
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        marginHorizontal: 10
+        height: 77 + Constants.statusBarHeight, //Constants.statusBarHeight * 4,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        position: "absolute",
+        top: 0,
+        // marginTop: 40,
+        paddingHorizontal: 20,
+        backgroundColor: "white",
+        width: "100%",
+        zIndex: 1,
     },
     headerBoxText: {
-        marginTop: 8,
+        marginTop: Constants.statusBarHeight
+        // marginVertical: 28,
     },
     headerText: {
         marginLeft: 2,
@@ -53,21 +60,20 @@ const Header: React.FC<Props> = ({
         <View style={styles.headerBox}>
             <View style={styles.headerBoxText}>
                 <Text style={styles.headerText}>{"MESTRE SHOPPING DISTRICT"}</Text>
-                {/* <Text style={styles.headerTextLogo}>{"Fai Centro!"}</Text> */}
                 <Image source={require("../../assets/logoFaiCentro-red.png")} style={styles.imageLogo} />
+                <TouchableOpacity style={styles.iconDebug} onPress={onPressFeedback}>
+                    <Image style={{
+                        width: 30,
+                        height: 30,
+                    }} source={require("../../assets/icon-debug.png")} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.iconShop} onPress={onPressShop}>
+                    <Image style={{
+                        width: 30,
+                        height: 30,
+                    }} source={require("../../assets/icon-shop.png")} />
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.iconDebug} onPress={onPressFeedback}>
-                <Image style={{
-                    width: 30,
-                    height: 30,
-                }} source={require("../../assets/icon-debug.png")} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconShop} onPress={onPressShop}>
-                <Image style={{
-                    width: 30,
-                    height: 30,
-                }} source={require("../../assets/icon-shop.png")} />
-            </TouchableOpacity>
         </View>
     );
 };

@@ -1,28 +1,37 @@
 import React, { useEffect, useState, useRef } from "react"
-import { Dimensions, ActivityIndicator, StatusBar, ScrollView, View, Image, Text, TouchableOpacity } from "react-native"
+import { StyleSheet, Platform, Dimensions, ActivityIndicator, StatusBar, ScrollView, View, Image, Text, TouchableOpacity } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./ShopScreen.styles";
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { ModalHeader } from "../../components";
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-function wp(percentage) {
+function wp(percentage: number) {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
 }
 
+const slideWidth = wp(100);
 const slideHeight = viewportHeight * 0.36;
-const slideWidth = wp(80);
-const itemHorizontalMargin = wp(2);
-
-const sliderWidth = viewportWidth;
+// const itemHorizontalMargin = wp(2);
 // const itemWidth = slideWidth + itemHorizontalMargin * 2;
-const itemWidth = viewportWidth;
 
-export interface Props {
+const sliderWidth = slideWidth;
+const itemWidth = slideWidth;
+
+interface Props {
     navigation: any;
     route: any;
 }
+interface ShopInfoInter {
+    field_main_image?: any;
+    title?: string;
+    field_address?: string;
+    body?: string;
+    field_categorie_esercente?: string;
+}
+type shopInfo = ShopInfoInter;
+
 const ShopScreen: React.FC<Props> = ({
     navigation,
     route
@@ -30,7 +39,8 @@ const ShopScreen: React.FC<Props> = ({
     const { shopID } = route.params;
     const [hasError, setErrors] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [shopInfo, setShopInfo] = useState({});
+    const [shopInfo, setShopInfo] = useState<shopInfo>({});
+    const [SnapIndex, setSnapIndex] = useState(0);
     let _carousel = useRef(null);
 
     async function fetchData() {
@@ -53,11 +63,18 @@ const ShopScreen: React.FC<Props> = ({
         }
     }, []);
 
-    const _renderItem = ({ item, index }) => {
+    const _renderItem = ({ item, index }, parallaxProps) => {
         return (
-            <View>
-                {/* <Text style={styles.title}>{item.title}</Text> */}
-                <Image source={{ uri: item.src }} style={{ width: "100%", height: 300 }} />
+            <View style={{ width: itemWidth, height: slideHeight, backgroundColor: "black" }}>
+                <Image
+                    source={{ uri: item.src }}
+                    style={{
+                        width: "100%",
+                        height: 300,
+                        backgroundColor: "black"
+                    }}
+                    resizeMode="cover"
+                />
             </View>
         );
     }
@@ -71,58 +88,82 @@ const ShopScreen: React.FC<Props> = ({
         )
     } else {
         return (
-            <View>
-                <ModalHeader />
-                {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <Carousel
-                    ref={(c) => { _carousel = c; }}
-                    data={shopInfo.field_main_image}
-                    renderItem={_renderItem}
-                    sliderWidth={sliderWidth}
-                    itemWidth={itemWidth}
-                    // sliderHeight={200}
-                    // itemHeight={200}
-                    inactiveSlideScale={1}
-                    inactiveSlideOpacity={1}
-                    hasParallaxImages={false}
-                    loop={true}
-                    loopClonesPerSide={1}
-                    autoplay={true}
-                    autoplayDelay={500}
-                    autoplayInterval={3000}
-                    shouldOptimizeUpdates={false}
-                    containerCustomStyle={styles.slider}
-                    contentContainerCustomStyle={styles.sliderContentContainer}
-                />}
-                <ScrollView style={styles.shopBoxText}>
-                    <Text style={[styles.shopTextTitle]}>{shopInfo.title}</Text>
-                    <Text style={[styles.shopTextAddress]}>{shopInfo.field_address}</Text>
-                    <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
-                    <Text style={[styles.shopText]}>{"Categorie"}</Text>
-                    <Text style={[styles.shopTextCategorie]}>{shopInfo.field_categorie_esercente}</Text>
-                    {/* <View style={styles.line} /> */}
-                    <View style={{ marginVertical: 10 }}>
-                        <Text style={[styles.shopText]}>{"Contatti"}</Text>
-                        <View style={{ flexDirection: "row", marginVertical: 10 }}>
-                            <TouchableOpacity style={[styles.iconBox, { marginRight: 5 }]}>
-                                <MaterialCommunityIcons name="crosshairs-gps" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                <MaterialCommunityIcons name="phone-in-talk" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                <MaterialCommunityIcons name="email" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                <MaterialCommunityIcons name="facebook" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                <MaterialCommunityIcons name="instagram" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                <MaterialCommunityIcons name="web" size={30} color="#1f1f20" />
-                            </TouchableOpacity>
+            <View style={{ backgroundColor: "white", flex: 1 }}>
+                <ModalHeader navigation={navigation} />
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.shopBoxText}>
+                    <View style={{ paddingHorizontal: 20, }}>
+                        <Text style={[styles.shopTextTitle]}>{shopInfo.title}</Text>
+                        <Text style={[styles.shopTextAddress]}>{shopInfo.field_address}</Text>
+                        <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
+                        <Text style={[styles.shopText]}>{"Categorie"}</Text>
+                        <Text style={[styles.shopTextCategorie]}>{shopInfo.field_categorie_esercente}</Text>
+                        {/* <View style={styles.line} /> */}
+                        <View style={{ marginVertical: 10 }}>
+                            <Text style={[styles.shopText]}>{"Contatti"}</Text>
+                            <View style={{ flexDirection: "row", marginVertical: 10 }}>
+                                <TouchableOpacity style={[styles.iconBox, { marginRight: 5 }]}>
+                                    <MaterialCommunityIcons name="crosshairs-gps" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                    <MaterialCommunityIcons name="phone-in-talk" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                    <MaterialCommunityIcons name="email" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                    <MaterialCommunityIcons name="facebook" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                    <MaterialCommunityIcons name="instagram" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                    <MaterialCommunityIcons name="web" size={30} color="#1f1f20" />
+                                </TouchableOpacity>
+                            </View>
                         </View>
+                        {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <Text style={[styles.shopText, { marginBottom: 20 }]}>{"Galleria Immagini"}</Text>}
                     </View>
+                    {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <View style={{ alignSelf: "center", backgroundColor: "black" }}>
+                        <Pagination
+                            dotsLength={shopInfo.field_main_image.length}
+                            activeDotIndex={SnapIndex}
+                            containerStyle={{ backgroundColor: 'black' }}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                // marginHorizontal: 8,
+                                backgroundColor: 'white'
+                            }}
+                            // inactiveDotStyle={{
+                            //     width: 10,
+                            //     height: 10,
+                            //     borderRadius: 5,
+                            //     marginHorizontal: 8,
+                            //     backgroundColor: 'rgba(255, 255, 255, 0.30)'
+                            //     // Define styles for inactive dots here
+                            // }}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.9}
+                        />
+                        <Carousel
+                            ref={(c) => { _carousel = c; }}
+                            data={shopInfo.field_main_image}
+                            hasParallaxImages={false}
+                            renderItem={_renderItem}
+                            sliderWidth={sliderWidth}
+                            itemWidth={itemWidth}
+                            onSnapToItem={(index) => setSnapIndex(index)}
+                            // inactiveSlideScale={1}
+                            // inactiveSlideOpacity={1}
+                            // loop={true}
+                            // loopClonesPerSide={1}
+                            autoplay={true}
+                            // autoplayDelay={500}
+                            // autoplayInterval={3000}
+                            shouldOptimizeUpdates={true}
+                        />
+                    </View>}
                 </ScrollView>
             </View>
         )
