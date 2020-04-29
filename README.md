@@ -2,7 +2,7 @@
 <h3 align="center">React Native app</h3>
 <br />
 
-![screenshots](https://raw.githubusercontent.com/bizzarrowebgroup/FaiCentro/master/preview.jpg)
+![screenshots](https://raw.githubusercontent.com/bizzarrowebgroup/FaiCentro/master/preview.jpg?token=AAUHDLWAOMQLYBS3DZQHLZ26VGVYO)
 
 Codice sorgente dell'App per il [Distretto del Centro di Mestre](https://www.faicentro.it/).
 Fatta con React Native, Expo e Typescript.
