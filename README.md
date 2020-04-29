@@ -1,6 +1,7 @@
 <h1 align="center">⭕️ Fai Centro!</h1>
 <h3 align="center">React Native app</h3>
 <br />
+
 ![screenshots](https://raw.githubusercontent.com/bizzarrowebgroup/FaiCentro/master/preview.jpg)
 
 Codice sorgente dell'App per il [Distretto del Centro di Mestre](https://www.faicentro.it/).
