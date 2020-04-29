@@ -38,7 +38,7 @@ const Place: React.FC<PlaceProps> = ({
             flat={false}
             tracksViewChanges={true}
             coordinate={coordinate}
-            pinColor={"#FF5A5F"}
+            pinColor={"#141414"}
         >
             <Callout
                 tooltip={false}

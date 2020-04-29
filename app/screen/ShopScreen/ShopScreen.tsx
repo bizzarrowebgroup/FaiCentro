@@ -65,13 +65,12 @@ const ShopScreen: React.FC<Props> = ({
 
     const _renderItem = ({ item, index }, parallaxProps) => {
         return (
-            <View style={{ width: itemWidth, height: slideHeight, backgroundColor: "black" }}>
+            <View style={{ width: slideWidth, height: 300 }}>
                 <Image
                     source={{ uri: item.src }}
                     style={{
                         width: "100%",
-                        height: 300,
-                        backgroundColor: "black"
+                        height: "100%",
                     }}
                     resizeMode="cover"
                 />
@@ -90,8 +89,40 @@ const ShopScreen: React.FC<Props> = ({
         return (
             <View style={{ backgroundColor: "white", flex: 1 }}>
                 <ModalHeader navigation={navigation} />
+                {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <><Carousel
+                    containerCustomStyle={{
+                        flexGrow: 0,
+                    }}
+                    ref={(c) => { _carousel = c; }}
+                    data={shopInfo.field_main_image}
+                    renderItem={_renderItem}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    onSnapToItem={(index) => setSnapIndex(index)}
+                    // inactiveSlideScale={1}
+                    // inactiveSlideOpacity={1}
+                    // loop={true}
+                    // loopClonesPerSide={1}
+                    autoplay={true}
+                    // autoplayDelay={500}
+                    // autoplayInterval={3000}
+                    shouldOptimizeUpdates={false}
+                />
+                    <Pagination
+                        dotsLength={shopInfo.field_main_image.length}
+                        activeDotIndex={SnapIndex}
+                        containerStyle={{ alignSelf: "center", backgroundColor: 'transparent', position: "absolute", top: 300, zIndex: 10 }}
+                        dotStyle={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            backgroundColor: 'white'
+                        }}
+                        inactiveDotOpacity={0.4}
+                        inactiveDotScale={0.9}
+                    /></>}
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.shopBoxText}>
-                    <View style={{ paddingHorizontal: 20, }}>
+                    <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
                         <Text style={[styles.shopTextTitle]}>{shopInfo.title}</Text>
                         <Text style={[styles.shopTextAddress]}>{shopInfo.field_address}</Text>
                         <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
@@ -121,49 +152,9 @@ const ShopScreen: React.FC<Props> = ({
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <Text style={[styles.shopText, { marginBottom: 20 }]}>{"Galleria Immagini"}</Text>}
+                        {/* {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <Text style={[styles.shopText, { marginBottom: 20 }]}>{"Galleria Immagini"}</Text>} */}
                     </View>
-                    {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <View style={{ alignSelf: "center", backgroundColor: "black" }}>
-                        <Pagination
-                            dotsLength={shopInfo.field_main_image.length}
-                            activeDotIndex={SnapIndex}
-                            containerStyle={{ backgroundColor: 'black' }}
-                            dotStyle={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 5,
-                                // marginHorizontal: 8,
-                                backgroundColor: 'white'
-                            }}
-                            // inactiveDotStyle={{
-                            //     width: 10,
-                            //     height: 10,
-                            //     borderRadius: 5,
-                            //     marginHorizontal: 8,
-                            //     backgroundColor: 'rgba(255, 255, 255, 0.30)'
-                            //     // Define styles for inactive dots here
-                            // }}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.9}
-                        />
-                        <Carousel
-                            ref={(c) => { _carousel = c; }}
-                            data={shopInfo.field_main_image}
-                            hasParallaxImages={false}
-                            renderItem={_renderItem}
-                            sliderWidth={sliderWidth}
-                            itemWidth={itemWidth}
-                            onSnapToItem={(index) => setSnapIndex(index)}
-                            // inactiveSlideScale={1}
-                            // inactiveSlideOpacity={1}
-                            // loop={true}
-                            // loopClonesPerSide={1}
-                            autoplay={true}
-                            // autoplayDelay={500}
-                            // autoplayInterval={3000}
-                            shouldOptimizeUpdates={true}
-                        />
-                    </View>}
+
                 </ScrollView>
             </View>
         )

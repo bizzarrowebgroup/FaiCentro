@@ -581,13 +581,13 @@ const IntroScreen: React.FC<Props> = ({
         loadingEnabled={true}
         // provider="google"
         clusterTextColor="white"
-        clusterColor="#DB0106"
+        clusterColor="#141414"
         initialRegion={INITIAL_REGION}
         style={{ flex: 1, backgroundColor: 'white', borderRadius: 20, }}
         customMapStyle={MapStyle}>
         <Geojson
           strokeColor="rgba(0, 0, 0, 0.55)"
-          fillColor="rgba(255, 26, 26, 0.2)"
+          fillColor="rgba(0, 0, 0, 0.2)"
           strokeWidth={2}
           geojson={myPlace}
         />
