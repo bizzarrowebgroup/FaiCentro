@@ -26,3 +26,14 @@ Per avviare l'app in un OS specifico:
 ```sh
 $ yarn ios | yarn android
 ```
+
+## Da fare
+
+- [ ] Aggiungere ricerca.
+- [ ] Aggiungere Drawer Nav.
+- [ ] Aggiungere Preferiti.
+- [ ] Aggiungere Lingue.
+- [ ] Aggiungere Impostazioni.
+- [ ] Aggiungere Notifiche.
+- [ ] Aggiungere Login.
+- [ ] Aggiungere Mio profilo.
