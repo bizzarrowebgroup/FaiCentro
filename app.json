@@ -2,12 +2,12 @@
   "expo": {
     "name": "FaiCentro",
     "slug": "FaiCentro",
+    "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -22,7 +22,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "it.bizzarro.faicentro",
+      "buildNumber": "1",
+      "userInterfaceStyle" : "light"
     }
   }
 }

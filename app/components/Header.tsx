@@ -4,12 +4,11 @@ import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
     headerBox: {
-        height: 77 + Constants.statusBarHeight, //Constants.statusBarHeight * 4,
+        height: 77 + Constants.statusBarHeight,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         position: "absolute",
         top: 0,
-        // marginTop: 40,
         paddingHorizontal: 20,
         backgroundColor: "white",
         width: "100%",
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
     },
     headerBoxText: {
         marginTop: Constants.statusBarHeight
-        // marginVertical: 28,
     },
     headerText: {
         marginLeft: 2,

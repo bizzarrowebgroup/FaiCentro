@@ -99,13 +99,7 @@ const ShopScreen: React.FC<Props> = ({
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
                     onSnapToItem={(index) => setSnapIndex(index)}
-                    // inactiveSlideScale={1}
-                    // inactiveSlideOpacity={1}
-                    // loop={true}
-                    // loopClonesPerSide={1}
-                    autoplay={true}
-                    // autoplayDelay={500}
-                    // autoplayInterval={3000}
+                    autoplay={{true}}
                     shouldOptimizeUpdates={false}
                 />
                     <Pagination
@@ -128,7 +122,6 @@ const ShopScreen: React.FC<Props> = ({
                         <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
                         <Text style={[styles.shopText]}>{"Categorie"}</Text>
                         <Text style={[styles.shopTextCategorie]}>{shopInfo.field_categorie_esercente}</Text>
-                        {/* <View style={styles.line} /> */}
                         <View style={{ marginVertical: 10 }}>
                             <Text style={[styles.shopText]}>{"Contatti"}</Text>
                             <View style={{ flexDirection: "row", marginVertical: 10 }}>
@@ -152,9 +145,7 @@ const ShopScreen: React.FC<Props> = ({
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        {/* {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <Text style={[styles.shopText, { marginBottom: 20 }]}>{"Galleria Immagini"}</Text>} */}
                     </View>
-
                 </ScrollView>
             </View>
         )

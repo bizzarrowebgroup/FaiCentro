@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Text, View, StyleSheet } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface PlaceProps {
