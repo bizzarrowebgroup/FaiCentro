@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     dashBox: {
-        flex: 1,
         backgroundColor: "white"
     },
     marker: {
@@ -11,7 +10,7 @@ export default StyleSheet.create({
         borderRadius: 5,
     },
     text: {
-        fontFamily: "Lato-Bold",
+        // fontFamily: "Lato-Bold",
         color: "#FFF",
     }
 });

@@ -1,5 +1,15 @@
-import React, { useState, useEffect } from "react"
-import { Text, View, Dimensions } from "react-native"
+import React, { useState, useEffect } from "react";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  Dimensions,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { View, AnimatePresence } from "moti";
+
+import Constants from "expo-constants";
 
 import styles from "./DashScreen.styles";
 
@@ -8,14 +18,14 @@ import MapView from "react-native-map-clustering";
 import { Geojson } from "react-native-maps";
 
 const myPlace = {
-  "type": "FeatureCollection",
-  "features": [
+  type: "FeatureCollection",
+  features: [
     {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "Polygon",
+        coordinates: [
           [
             [12.2370673, 45.49809369],
             [12.23704701, 45.49805071],
@@ -457,164 +467,329 @@ const myPlace = {
             [12.23692096, 45.49819411],
             [12.23706182, 45.49818278],
             [12.23707257, 45.49814557],
-            [12.2370673, 45.49809369]
-          ]
-        ]
-      }
-    }
-  ]
-}
+            [12.2370673, 45.49809369],
+          ],
+        ],
+      },
+    },
+  ],
+};
 const MapStyle = [
   {
-    "elementType": "labels",
-    "stylers": [
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "administrative.land_parcel",
-    "stylers": [
+    featureType: "administrative.land_parcel",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "administrative.locality",
-    "elementType": "labels.text",
-    "stylers": [
+    featureType: "administrative.locality",
+    elementType: "labels.text",
+    stylers: [
       {
-        "visibility": "on"
-      }
-    ]
+        visibility: "on",
+      },
+    ],
   },
   {
-    "featureType": "administrative.neighborhood",
-    "stylers": [
+    featureType: "administrative.neighborhood",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road.arterial",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.arterial",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "on"
-      }
-    ]
+        visibility: "on",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "on"
-      }
-    ]
+        visibility: "on",
+      },
+    ],
   },
   {
-    "featureType": "road.highway.controlled_access",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.highway.controlled_access",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "on"
-      }
-    ]
+        visibility: "on",
+      },
+    ],
   },
   {
-    "featureType": "road.local",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.local",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "on"
-      }
-    ]
-  }
-]
+        visibility: "on",
+      },
+    ],
+  },
+];
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.022;
 const INITIAL_REGION = {
   latitude: 45.4942,
-  longitude: 12.2390,
+  longitude: 12.239,
   latitudeDelta: LATITUDE_DELTA,
   longitudeDelta: LATITUDE_DELTA * ASPECT_RATIO,
 };
 
+const Negozio = ({
+  title,
+  field_main_image,
+  field_distretto,
+  field_telefono,
+  field_address,
+  field_categorie_esercente,
+  onPress,
+}: {
+  title: any;
+  field_main_image: any;
+  field_distretto: any;
+  field_telefono: any;
+  field_address: any;
+  field_categorie_esercente: any;
+  onPress: () => {};
+}) => {
+  // remove events
+  if (!field_distretto) return <></>;
+  const pressableRef = React.useRef();
+  return (
+    <Pressable
+      ref={pressableRef}
+      style={({ pressed }) => [
+        {
+          // backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
+          marginVertical: 10,
+        },
+      ]}
+      onPress={onPress}
+    >
+      {({ pressed }) => (
+        <>
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              zIndex: 1,
+              height: 170,
+              width: "100%",
+              borderRadius: 8,
+              backgroundColor: "black",
+              opacity: pressed ? 0.25 : 0,
+            }}
+          />
+          <Image
+            source={{
+              uri: field_main_image.src
+                ? field_main_image.src
+                : field_main_image[0].src
+                ? field_main_image[0].src
+                : "",
+            }}
+            style={{
+              height: 170,
+              width: "100%",
+              resizeMode: "cover",
+              borderRadius: 8,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "700",
+              marginTop: 7,
+              marginBottom: 3,
+            }}
+          >
+            {title}
+          </Text>
+          <Text
+            style={{ fontSize: 12, color: "gray" }}
+          >{`${field_categorie_esercente} • ${field_distretto}`}</Text>
+          {/* <Text style={{ fontSize: 12, color: "gray" }}>{field_address}</Text> */}
+          {/* <Text>{JSON.stringify(item, null, 4)}</Text> */}
+        </>
+      )}
+    </Pressable>
+  );
+};
+
+// function Shape({ bg = "white" }: { bg: string }) {
+//   return (
+//     <View
+//       from={{
+//         opacity: 0,
+//         scale: 0.5,
+//       }}
+//       animate={{
+//         opacity: 1,
+//         scale: 1,
+//       }}
+//       exit={{
+//         opacity: 0,
+//         scale: 0.9,
+//       }}
+//       style={{
+//         justifyContent: "center",
+//         height: 250,
+//         width: 250,
+//         borderRadius: 25,
+//         marginRight: 10,
+//         backgroundColor: bg,
+//       }}
+//     />
+//   );
+// }
+
 export interface Props {
   navigation: any;
 }
-const IntroScreen: React.FC<Props> = ({
-  navigation
-}) => {
+const IntroScreen: React.FC<Props> = ({ navigation }) => {
   const [hasError, setErrors] = useState(false);
   const [negozi, setNegozi] = useState([]);
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true);
 
   async function fetchData() {
     const res = await fetch("https://faicentro.it/esercenti/all/json");
     res
       .json()
-      .then(res => {
-        setNegozi(res)
-        setLoading(false)
+      .then((res) => {
+        setNegozi(res);
+        setLoading(false);
       })
-      .catch(err => {
-        setErrors(err)
-        setLoading(false)
+      .catch((err) => {
+        setErrors(err);
+        setLoading(false);
       });
   }
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
+
+  const [visible, toggle] = React.useReducer((s) => !s, true);
 
   return (
-    <View style={styles.dashBox}>
+    <>
       <Header
         onPressFeedback={() => console.log("PressedFeedback")}
         onPressShop={() => console.log("PressedShop")}
       />
-      {negozi && negozi.length > 1 && <MapView
-        showsMyLocationButton={false}
-        showsUserLocation={true}
-        showsIndoors={true}
-        showsTraffic={false}
-        loadingEnabled={true}
-        // provider="google" enable if you use android
-        clusterTextColor="white"
-        clusterColor="#141414"
-        initialRegion={INITIAL_REGION}
-        style={{ flex: 1, backgroundColor: 'white', borderRadius: 20, }}
-        customMapStyle={MapStyle}>
-        <Geojson
-          strokeColor="rgba(0, 0, 0, 0.55)"
-          fillColor="rgba(0, 0, 0, 0.2)"
-          strokeWidth={2}
-          geojson={myPlace}
-        />
-        {negozi.map((item, key) => (
-          <Place
-            key={`map-marker-${item.nid}`}
-            coordinate={{
-              latitude: parseFloat(item.latitude),
-              longitude: parseFloat(item.longitude),
-            }}
-            title={item.title}
-            image={item.field_main_image}
-            description={item.field_address}
-            onPress={() => navigation.navigate('ShopDetails', { shopID: item.nid })}
-          />))
-        }
-      </MapView>
-      }
-    </View>
-  )
-}
+      {isLoading && (
+        <View
+          style={{
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator color={"black"} animating size={"large"} />
+        </View>
+      )}
+      <ScrollView
+        showsVerticalScrollIndicator
+        style={styles.dashBox}
+        contentContainerStyle={{
+          paddingVertical: 77 + Constants.statusBarHeight,
+          marginHorizontal: 20,
+        }}
+      >
+        {/* <Pressable
+          onPress={toggle}
+          // style={{
+          //   flex: 1,
+          //   alignItems: "center",
+          //   justifyContent: "center",
+          //   flexDirection: "row",
+          //   backgroundColor: "#9c1aff",
+          // }}
+        >
+          <AnimatePresence exitBeforeEnter>
+            {visible && <Shape bg="hotpink" key="hotpink" />}
+            {!visible && <Shape bg="cyan" key="cyan" />}
+          </AnimatePresence>
+        </Pressable> */}
+        {!isLoading && negozi && negozi.length > 1 && (
+          <>
+            <View style={{ marginVertical: 10 }}>
+              <Text
+                style={{ fontSize: 18, fontWeight: "700" }}
+              >{`${negozi.length} negozi`}</Text>
+            </View>
+            {negozi.map((item) => (
+              <Negozio
+                {...item}
+                key={item?.nid}
+                onPress={() =>
+                  navigation.navigate("ShopDetails", { shopID: item?.nid })
+                }
+              />
+            ))}
+          </>
+        )}
+        {/* {!isLoading && negozi && negozi.length > 1 && (
+        <MapView
+          showsMyLocationButton={false}
+          showsUserLocation={true}
+          showsIndoors={true}
+          showsTraffic={false}
+          loadingEnabled={true}
+          // provider="google" enable if you use android
+          clusterTextColor="white"
+          clusterColor="#141414"
+          initialRegion={INITIAL_REGION}
+          style={{ flex: 1, backgroundColor: "white", borderRadius: 20 }}
+          customMapStyle={MapStyle}
+        >
+          <Geojson
+            strokeColor="rgba(0, 0, 0, 0.55)"
+            fillColor="rgba(0, 0, 0, 0.2)"
+            strokeWidth={2}
+            geojson={myPlace}
+          />
+          {negozi.map((item, key) => (
+            <Place
+              key={`map-marker-${item.nid}`}
+              coordinate={{
+                latitude: parseFloat(item.latitude),
+                longitude: parseFloat(item.longitude),
+              }}
+              title={item.title}
+              image={item.field_main_image}
+              description={item.field_address}
+              onPress={() =>
+                navigation.navigate("ShopDetails", { shopID: item.nid })
+              }
+            />
+          ))}
+        </MapView>
+      )} */}
+      </ScrollView>
+    </>
+  );
+};
 
-export default IntroScreen
+export default IntroScreen;
