@@ -85,71 +85,71 @@ const ShopScreen: React.FC<Props> = ({
                 <ActivityIndicator color={"black"} animating size={"large"} style={{ marginVertical: 20 }} />
             </View>
         )
-    } else {
-        return (
-            <View style={{ backgroundColor: "white", flex: 1 }}>
-                <ModalHeader navigation={navigation} />
-                {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <><Carousel
-                    containerCustomStyle={{
-                        flexGrow: 0,
+    }
+    
+    return (
+        <View style={{ backgroundColor: "white", flex: 1 }}>
+            <ModalHeader navigation={navigation} />
+            {shopInfo.field_main_image && shopInfo.field_main_image.length > 0 && <><Carousel
+                containerCustomStyle={{
+                    flexGrow: 0,
+                }}
+                ref={(c) => { _carousel = c; }}
+                data={shopInfo.field_main_image}
+                renderItem={_renderItem}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                onSnapToItem={(index) => setSnapIndex(index)}
+                autoplay={{ true}}
+                shouldOptimizeUpdates={false}
+            />
+                <Pagination
+                    dotsLength={shopInfo.field_main_image.length}
+                    activeDotIndex={SnapIndex}
+                    containerStyle={{ alignSelf: "center", backgroundColor: 'transparent', position: "absolute", top: 300, zIndex: 10 }}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        backgroundColor: 'white'
                     }}
-                    ref={(c) => { _carousel = c; }}
-                    data={shopInfo.field_main_image}
-                    renderItem={_renderItem}
-                    sliderWidth={sliderWidth}
-                    itemWidth={itemWidth}
-                    onSnapToItem={(index) => setSnapIndex(index)}
-                    autoplay={{true}}
-                    shouldOptimizeUpdates={false}
-                />
-                    <Pagination
-                        dotsLength={shopInfo.field_main_image.length}
-                        activeDotIndex={SnapIndex}
-                        containerStyle={{ alignSelf: "center", backgroundColor: 'transparent', position: "absolute", top: 300, zIndex: 10 }}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            backgroundColor: 'white'
-                        }}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.9}
-                    /></>}
-                <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.shopBoxText}>
-                    <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-                        <Text style={[styles.shopTextTitle]}>{shopInfo.title}</Text>
-                        <Text style={[styles.shopTextAddress]}>{shopInfo.field_address}</Text>
-                        <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
-                        <Text style={[styles.shopText]}>{"Categorie"}</Text>
-                        <Text style={[styles.shopTextCategorie]}>{shopInfo.field_categorie_esercente}</Text>
-                        <View style={{ marginVertical: 10 }}>
-                            <Text style={[styles.shopText]}>{"Contatti"}</Text>
-                            <View style={{ flexDirection: "row", marginVertical: 10 }}>
-                                <TouchableOpacity style={[styles.iconBox, { marginRight: 5 }]}>
-                                    <MaterialCommunityIcons name="crosshairs-gps" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                    <MaterialCommunityIcons name="phone-in-talk" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                    <MaterialCommunityIcons name="email" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                    <MaterialCommunityIcons name="facebook" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                    <MaterialCommunityIcons name="instagram" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
-                                    <MaterialCommunityIcons name="web" size={30} color="#1f1f20" />
-                                </TouchableOpacity>
-                            </View>
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.9}
+                /></>}
+            <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.shopBoxText}>
+                <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+                    <Text style={[styles.shopTextTitle]}>{shopInfo.title}</Text>
+                    <Text style={[styles.shopTextAddress]}>{shopInfo.field_address}</Text>
+                    <Text style={[styles.shopTextInfos]}>{shopInfo.body}</Text>
+                    <Text style={[styles.shopText]}>{"Categorie"}</Text>
+                    <Text style={[styles.shopTextCategorie]}>{shopInfo.field_categorie_esercente}</Text>
+                    <View style={{ marginVertical: 10 }}>
+                        <Text style={[styles.shopText]}>{"Contatti"}</Text>
+                        <View style={{ flexDirection: "row", marginVertical: 10 }}>
+                            <TouchableOpacity style={[styles.iconBox, { marginRight: 5 }]}>
+                                <MaterialCommunityIcons name="crosshairs-gps" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                <MaterialCommunityIcons name="phone-in-talk" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                <MaterialCommunityIcons name="email" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                <MaterialCommunityIcons name="facebook" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                <MaterialCommunityIcons name="instagram" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.iconBox, { marginHorizontal: 5 }]}>
+                                <MaterialCommunityIcons name="web" size={30} color="#1f1f20" />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </ScrollView>
-            </View>
-        )
-    }
+                </View>
+            </ScrollView>
+        </View>
+    )
 }
 
 export default ShopScreen

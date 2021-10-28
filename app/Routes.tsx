@@ -25,7 +25,7 @@ const MainFlow: React.FC = () => {
     )
 }
 
-export default function Routes() {
+export default Routes = () => {
     return (<NavigationContainer>
         <ModalStack.Navigator
             screenOptions={{

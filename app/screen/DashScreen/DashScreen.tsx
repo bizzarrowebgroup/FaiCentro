@@ -553,14 +553,21 @@ const IntroScreen: React.FC<Props> = ({
   navigation
 }) => {
   const [hasError, setErrors] = useState(false);
-  const [negozi, setNegozi] = useState({});
+  const [negozi, setNegozi] = useState([]);
+  const [isLoading, setLoading] = useState(true)
 
   async function fetchData() {
     const res = await fetch("https://faicentro.it/esercenti/all/json");
     res
       .json()
-      .then(res => setNegozi(res))
-      .catch(err => setErrors(err));
+      .then(res => {
+        setNegozi(res)
+        setLoading(false)
+      })
+      .catch(err => {
+        setErrors(err)
+        setLoading(false)
+      });
   }
 
   useEffect(() => {
@@ -573,7 +580,7 @@ const IntroScreen: React.FC<Props> = ({
         onPressFeedback={() => console.log("PressedFeedback")}
         onPressShop={() => console.log("PressedShop")}
       />
-      {negozi.length > 1 && <MapView
+      {negozi && negozi.length > 1 && <MapView
         showsMyLocationButton={false}
         showsUserLocation={true}
         showsIndoors={true}
