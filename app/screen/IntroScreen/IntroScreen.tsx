@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Image, ActivityIndicator } from "react-native";
+import { AppContext } from "../../context";
 
 import styles from "./IntroScreen.styles";
 
@@ -7,10 +8,22 @@ export interface Props {
   navigation: any;
 }
 const IntroScreen: React.FC<Props> = ({ navigation }) => {
+  const { setShops } = useContext(AppContext);
+  const loadApp = async () => {
+    const res = await fetch("https://faicentro.it/esercenti/all/json");
+    res
+      .json()
+      .then((res) => {
+        setShops(res);
+        navigation.navigate("Main");
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
+
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("DashBoard");
-    }, 20);
+    loadApp();
   }, []);
 
   return (

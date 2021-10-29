@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     dashBox: {
-        backgroundColor: "white"
+        backgroundColor: "black"
     },
     marker: {
         backgroundColor: "#550bbc",

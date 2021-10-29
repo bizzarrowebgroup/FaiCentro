@@ -7,44 +7,46 @@ export default StyleSheet.create({
     backgroundColor: "black",
   },
   shopBox: {
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
   shopBoxText: {
-    backgroundColor: "white",
+    backgroundColor: "black",
+    // marginBottom: 20, 
   },
   imageLogo: {
     width: 276,
     height: 173,
     resizeMode: "contain",
+    tintColor: "white"
   },
   shopText: {
     // fontFamily: "Lato-Regular",
-    color: "black",
+    color: "white",
     fontSize: 20,
   },
   shopTextCategorie: {
     // fontFamily: "Lato-Bold",
-    color: "black",
+    color: "gray",
     fontSize: 14,
-    marginVertical: 15,
   },
   shopTextTitle: {
     // fontFamily: "Lato-Bold",
-    color: "black",
-    fontSize: 25,
+    color: "white",
+    fontSize: 32,
+    fontWeight: "700"
   },
   shopTextAddress: {
     // fontFamily: "Lato-Bold",
-    color: "darkgrey",
+    color: "lightgray",
     fontSize: 17,
   },
   shopTextInfos: {
     marginVertical: 20,
     // fontFamily: "Lato-Regular",
-    color: "black",
+    color: "white",
     fontSize: 14,
   },
   iconBox: {
@@ -53,6 +55,6 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: "#e8e9ef",
-    borderRadius: 10,
+    borderRadius: 40 / 2,
   },
 });
